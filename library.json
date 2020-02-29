@@ -1,0 +1,26 @@
+{
+  "name": "SHIBME280",
+  "description": "An implementation of BME280 for SHIT",
+  "keywords": [
+    "SmartHome"
+  ],
+  "authors": [
+    {
+      "name": "Karsten Becker",
+      "email": "kb@shi.technology",
+      "url": "https://shi.technology",
+      "maintainer": true
+    }
+  ],
+  "version": "0.2.1",
+  "frameworks": "arduino",
+  "platforms": "espressif32",
+  "dependencies": {
+    "Preferences": "^1.0",
+    "Wire": "^1.0.1",
+    "SPI": "^1.0",
+    "SmartHomeIntegrationTech": "^0.2.1",
+    "Adafruit Unified Sensor": "^1.1.2",
+    "Adafruit BME280 Library": "^2.0.1"
+  }
+}
