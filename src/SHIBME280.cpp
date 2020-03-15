@@ -11,13 +11,35 @@
 #include <SHISensor.h>
 #include <Wire.h>
 
-bool SHI::BME280::setupSensor() {
-  bool status = bme.begin(0x76, i2cPort);
+bool SHI::BME280::reconfigure(Configuration *newConfig) {
+  config = castConfig<BME280Config>(newConfig);
+  return reconfigure();
+}
+
+bool SHI::BME280::reconfigure() {
+  switch (config.useBus) {
+    case 0:
+      i2cPort = &Wire;
+      break;
+    case 1:
+      i2cPort = &Wire1;
+      break;
+
+    default:
+      SHI_LOGERROR("Invaild bus");
+      return false;
+  }
+  if (!bme.begin(config.primaryAddress ? 0x76 : 0x77, i2cPort)) return false;
   bme.setSampling(Adafruit_BME280::MODE_FORCED,
-                  Adafruit_BME280::SAMPLING_X1,  // temperature
-                  Adafruit_BME280::SAMPLING_X1,  // pressure
-                  Adafruit_BME280::SAMPLING_X1,  // humidity
-                  Adafruit_BME280::FILTER_OFF);
+                  config.temperatureSampling,  // temperature
+                  config.pressureSampling,     // pressure
+                  config.humiditySampling,     // humidity
+                  config.sensorFilter);
+  return true;
+}
+
+bool SHI::BME280::setupSensor() {
+  bool status = reconfigure();
   if (!status) {
     statusMessage = "Could not find a valid BME280 sensor, check wiring!";
     fatalError = true;
