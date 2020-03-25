@@ -6,7 +6,7 @@
 
 // WARNING, this is an automatically generated file!
 // Don't change anything in here.
-// Last update 2020-03-15
+// Last update 2020-03-25
 
 # include <iostream>
 # include <string>
@@ -15,8 +15,12 @@
 # include "SHIBME280.h"
 // Configuration implementation for class SHI::BME280Config
 
+namespace {
+    
+}  // namespace
+
 SHI::BME280Config::BME280Config(const JsonObject &obj):
-       useBus(obj["useBus"] | 0),
+      useBus(obj["useBus"] | 0),
       primaryAddress(obj["primaryAddress"] | true),
       sensorFilter(static_cast<Adafruit_BME280::sensor_filter>(obj["sensorFilter"].as<int>() | Adafruit_BME280::FILTER_OFF)),
       temperatureSampling(static_cast<Adafruit_BME280::sensor_sampling>(obj["temperatureSampling"].as<int>() | Adafruit_BME280::SAMPLING_X1)),
